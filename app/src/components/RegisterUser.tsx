@@ -59,35 +59,43 @@ const RegisterUser = () => {
                 >
                     <Form.Item
                         name="name"
-                        label="Name"
-                        rules={[{ required: true, message: 'Please input your Name!' }]}
+                        label="TC kimlik no"
+                        rules={[{ required: true, message: 'Lütfen TC kimlik numrası giriniz!' }]}
+                    >
+                        <Input />
+                    </Form.Item>
+
+                    <Form.Item
+                        name="name"
+                        label="Isim"
+                        rules={[{ required: true, message: 'Lütfen isim giriniz!' }]}
                     >
                         <Input />
                     </Form.Item>
 
                     <Form.Item
                         name="surname"
-                        label="Surname"
-                        rules={[{ required: true, message: 'Please input your Surname!' }]}
+                        label="Soyisim"
+                        rules={[{ required: true, message: 'Lütfen soyisim giriniz!' }]}
                     >
                         <Input />
                     </Form.Item>
 
                     <Form.Item
                         name="phone"
-                        label="Phone Number"
-                        rules={[{ required: true, message: 'Please input your phone number!' }]}
+                        label="Telefon Numarası"
+                        rules={[{ required: true, message: 'Lütfen telefon numarası giriniz!' }]}
                     >
                         <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
                     </Form.Item>
 
                     <Form.Item
                         name="password"
-                        label="Password"
+                        label="Şifre"
                         rules={[
                             {
                                 required: true,
-                                message: 'Please input your password!',
+                                message: 'Lütfen şifre giriniz!',
                             },
                         ]}
                         hasFeedback
@@ -97,31 +105,40 @@ const RegisterUser = () => {
 
                     <Form.Item
                         name="confirm"
-                        label="Confirm Password"
+                        label="Şifreyi onayla"
                         dependencies={['password']}
                         hasFeedback
                         rules={[
                             {
                                 required: true,
-                                message: 'Please confirm your password!',
+                                message: 'Lütfen şifreyi onaylayınız!',
                             },
                             ({ getFieldValue }) => ({
                                 validator(_, value) {
                                     if (!value || getFieldValue('password') === value) {
                                         return Promise.resolve();
                                     }
-                                    return Promise.reject(new Error('The two passwords that you entered do not match!'));
+                                    return Promise.reject(new Error('İki şifre birbiri ile uyuşmuyor!'));
                                 },
                             }),
                         ]}
                     >
                         <Input.Password />
                     </Form.Item>
-
                     <Form.Item {...tailFormItemLayout}>
-                        <Button type="primary" htmlType="submit">
-                            Register
-                        </Button>
+                        <Row>
+                            <Col span={6} offset={3}>
+                                <Button type="primary" htmlType="reset" onClick={() => history.push("/")}>
+                                    Vazgeç
+                                </Button>
+
+                            </Col>
+                            <Col span={6} offset={6}>
+                                <Button type="primary" htmlType="submit">
+                                    Onayla
+                                </Button>
+                            </Col>
+                        </Row>
                     </Form.Item>
                 </Form>
             </Col>

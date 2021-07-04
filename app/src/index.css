@@ -27,3 +27,11 @@
   .site-layout-background {
     background: #fff;
   }
+
+  .logo {
+      color: antiquewhite !important;
+  }
+
+  .ant-layout {
+      background: white;
+  }

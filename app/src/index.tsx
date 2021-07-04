@@ -7,6 +7,7 @@ import { createStore } from 'redux'
 import rootReducer from '../src/redux/reducers/index';
 import App from '../src/app';
 import 'antd/dist/antd.css';
+import './index.css';
 
 const store = createStore(rootReducer);
 

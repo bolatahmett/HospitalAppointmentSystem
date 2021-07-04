@@ -71,11 +71,10 @@ const AppointmentDrawer = (props: any) => {
                                 <Input placeholder={"Telefon numarası giriniz!"} addonBefore={prefixSelector} style={{ width: '100%' }} />
                             </Form.Item>
                         </Col>
-                       
                     </Row>
                     <Row gutter={16}>
-                    <Col span={12}>
-                        <Form.Item
+                        <Col span={12}>
+                            <Form.Item
                                 name="date"
                                 label="Gün"
                                 rules={[{ required: true, message: 'Gün seçiniz.' }]}
