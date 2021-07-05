@@ -14,7 +14,6 @@ const store = createStore(rootReducer);
 ReactDOM.render(
     <FirebaseContext.Provider value={firebase}>
         <Provider store={store}>
-
             <App firebase={firebase} database={database} />
         </Provider>
     </FirebaseContext.Provider>
