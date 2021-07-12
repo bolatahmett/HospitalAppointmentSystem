@@ -1,6 +1,7 @@
 import React from 'react';
 import { Form, Input, Select, Button, Col, Row } from 'antd';
 import { useHistory } from 'react-router-dom';
+import { registerUser } from './../database-engine/user';
 
 const { Option } = Select;
 
@@ -32,7 +33,15 @@ const RegisterUser = () => {
     let history = useHistory();
 
     const onFinish = (values: any) => {
-        console.log('Received values of form: ', values);
+        let user: IUserModel = {
+            IdentifyNumber: values.IdentifyNumber,
+            Name: values.Name,
+            Surname: values.Surname,
+            Email: values.Email === undefined ? "a" : values.Email,
+            PhoneNumber: values.PhoneNumber,
+            Password: values.Password
+        };
+        registerUser(user);
         history.push("/");
     };
 
@@ -58,7 +67,7 @@ const RegisterUser = () => {
                     scrollToFirstError
                 >
                     <Form.Item
-                        name="name"
+                        name="IdentifyNumber"
                         label="TC kimlik no"
                         rules={[{ required: true, message: 'Lütfen TC kimlik numrası giriniz!' }]}
                     >
@@ -66,7 +75,7 @@ const RegisterUser = () => {
                     </Form.Item>
 
                     <Form.Item
-                        name="name"
+                        name="Name"
                         label="Isim"
                         rules={[{ required: true, message: 'Lütfen isim giriniz!' }]}
                     >
@@ -74,7 +83,7 @@ const RegisterUser = () => {
                     </Form.Item>
 
                     <Form.Item
-                        name="surname"
+                        name="Surname"
                         label="Soyisim"
                         rules={[{ required: true, message: 'Lütfen soyisim giriniz!' }]}
                     >
@@ -82,7 +91,7 @@ const RegisterUser = () => {
                     </Form.Item>
 
                     <Form.Item
-                        name="phone"
+                        name="PhoneNumber"
                         label="Telefon Numarası"
                         rules={[{ required: true, message: 'Lütfen telefon numarası giriniz!' }]}
                     >
@@ -90,7 +99,7 @@ const RegisterUser = () => {
                     </Form.Item>
 
                     <Form.Item
-                        name="password"
+                        name="Password"
                         label="Şifre"
                         rules={[
                             {
@@ -104,9 +113,9 @@ const RegisterUser = () => {
                     </Form.Item>
 
                     <Form.Item
-                        name="confirm"
+                        name="Confirm"
                         label="Şifreyi onayla"
-                        dependencies={['password']}
+                        dependencies={['Password']}
                         hasFeedback
                         rules={[
                             {
@@ -115,7 +124,7 @@ const RegisterUser = () => {
                             },
                             ({ getFieldValue }) => ({
                                 validator(_, value) {
-                                    if (!value || getFieldValue('password') === value) {
+                                    if (!value || getFieldValue('Password') === value) {
                                         return Promise.resolve();
                                     }
                                     return Promise.reject(new Error('İki şifre birbiri ile uyuşmuyor!'));

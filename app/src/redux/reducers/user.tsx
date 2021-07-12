@@ -1,5 +1,5 @@
 
-const user = (state = "", action: { type: any; user: UserModel }) => {
+const user = (state = "", action: { type: any; user: IUserModel }) => {
     switch (action.type) {
         case 'LOGIN_USER':
             return action.user;

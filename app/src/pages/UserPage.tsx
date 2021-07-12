@@ -1,16 +1,19 @@
 import { Col, Row, Layout, Menu, Button, Tooltip } from 'antd';
-import React from 'react';
+import React, { useContext } from 'react';
 import { UserOutlined, LaptopOutlined, LogoutOutlined } from '@ant-design/icons';
 import AppointmentCard from '../components/AppointmentCard';
 import { useHistory } from 'react-router-dom';
+import UserContext from '../components/UserContext';
 
 const { Header, Content, Sider } = Layout;
 
 const text = <span>Çıkış</span>;
 
-const UserPage = () => {
+const UserPage = (props: any) => {
 
     const history = useHistory();
+
+    const context = useContext(UserContext);
 
     return (
         <Row style={{ height: "inherit" }}>
@@ -22,7 +25,7 @@ const UserPage = () => {
                                 <div className="logo">Hastane Randevu Sistemi</div>
                             </Col>
                             <Col span={5}>
-                                <div className="logo">Pelin Bolat</div>
+                                <div className="logo">{context.user.Name} {context.user.Surname}</div>
                             </Col>
                             <Col span={1}>
                                 <Tooltip placement="leftTop" title={text}>
@@ -31,7 +34,6 @@ const UserPage = () => {
                                         icon={<LogoutOutlined />}
                                         onClick={() => {
                                             history.push("/")
-
                                         }}
                                     />
                                 </Tooltip>

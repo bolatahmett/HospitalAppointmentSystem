@@ -1,15 +1,28 @@
 import { Form, Input, Button, Checkbox, Col, Row } from 'antd';
-import React from 'react';
+import React, { useContext } from 'react';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
+import { loginUser } from '../database-engine/user';
+import UserContext from '../components/UserContext';
 
 const UserLogin = () => {
 
   let history = useHistory();
 
-  const onFinish = (values: any) => {
-    console.log('Success:', values);
+  const context = useContext(UserContext);
+
+  const onSuccess = (user: IUserModel) => {
+    context.setUser(user);
     history.push("userpage");
+  }
+
+  const onFinish = (values: any) => {
+    let userInfo: LoginModel = {
+      IdentifyNumber: values.IdentifyNumber,
+      Password: values.Password
+    };
+
+    loginUser(userInfo, onSuccess);
   };
 
   return (
@@ -22,13 +35,13 @@ const UserLogin = () => {
           onFinish={onFinish}
         >
           <Form.Item
-            name="userId"
+            name="IdentifyNumber"
             rules={[{ required: true, message: 'Lütfen TC kimlik numarasını giriniz!' }]}
           >
             <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="TC Kimik No" />
           </Form.Item>
           <Form.Item
-            name="password"
+            name="Password"
             rules={[{ required: true, message: 'Lütfen şifre giriniz!' }]}
           >
             <Input

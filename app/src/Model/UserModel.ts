@@ -1,4 +1,5 @@
-export declare class UserModel implements IUserModel {
+
+export class UserModel implements IUserModel {
     Name: string;
     Surname: string;
     Email: string;

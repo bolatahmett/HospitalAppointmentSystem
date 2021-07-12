@@ -1,4 +1,4 @@
-import { database } from "../components/firebase";
+import { database } from "../firebase";
 
 export const chatMessagesListener = (userName: any, addChatMessage: any) => {
 

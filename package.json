@@ -5,8 +5,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "create": "webpack",
-    "start": "webpack serve"
+    "create": "webpack --config webpack-prod.config.cjs",
+    "start": "webpack serve --config webpack-dev.config.cjs"
   },
   "keywords": [],
   "author": "",

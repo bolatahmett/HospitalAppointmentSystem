@@ -1,9 +1,26 @@
 import { Drawer, Form, Button, Col, Row, Input, Select, DatePicker, TimePicker } from 'antd';
-import React from 'react';
+import React, { useContext } from 'react';
+import UserContext from '../components/UserContext';
+import { register } from '../database-engine/appointment';
 
 const { Option } = Select;
 
 const AppointmentDrawer = (props: any) => {
+
+    const context = useContext(UserContext);
+
+    const [form] = Form.useForm();
+
+    const onFinish = (values: any) => {
+        let appointment: IAppointmentModel = {
+            IdentifyNumber: context.user.IdentifyNumber,
+            Date: values.Date.format('YYYY-MM-DD'),
+            Time: values.Time.format('HH:mm'),
+            Description: values.Description
+        };
+
+        register(appointment, props.onClose);
+    };
 
     const prefixSelector = (
         <Form.Item name="prefix" noStyle>
@@ -30,52 +47,54 @@ const AppointmentDrawer = (props: any) => {
                         <Button onClick={props.onClose} style={{ marginRight: 8 }}>
                             İptal
                         </Button>
-                        <Button onClick={props.onClose} type="primary">
+                        <Button type="primary" onClick={() => form.submit()}>
                             Onayla
                         </Button>
                     </div>
                 }
             >
                 <Form layout="vertical" hideRequiredMark
+                    form={form}
+                    onFinish={onFinish}
                     initialValues={{
                         prefix: '90',
+                        Name: context.user.Name,
+                        Surname: context.user.Surname,
+                        PhoneNumber: context.user.PhoneNumber
                     }}
                 >
                     <Row gutter={16}>
                         <Col span={12}>
                             <Form.Item
-                                name="name"
+                                name="Name"
                                 label="Isim"
-                                rules={[{ required: true, message: 'Lütfen isim giriniz.' }]}
                             >
-                                <Input placeholder="Isim giriniz!" />
+                                <Input readOnly={true} />
                             </Form.Item>
                         </Col>
                         <Col span={12}>
                             <Form.Item
-                                name="surname"
+                                name="Surname"
                                 label="Soyisim"
-                                rules={[{ required: true, message: 'Lütfen soyisim giriniz.' }]}
                             >
-                                <Input placeholder="Soyisim giriniz!" />
+                                <Input readOnly={true} />
                             </Form.Item>
                         </Col>
                     </Row>
                     <Row gutter={16}>
                         <Col span={12}>
                             <Form.Item
-                                name="phone"
+                                name="PhoneNumber"
                                 label="Telefon Numarası"
-                                rules={[{ required: true, message: 'Lütfen telefon numarası giriniz.' }]}
                             >
-                                <Input placeholder={"Telefon numarası giriniz!"} addonBefore={prefixSelector} style={{ width: '100%' }} />
+                                <Input readOnly={true} placeholder={"Telefon numarası giriniz!"} addonBefore={prefixSelector} style={{ width: '100%' }} />
                             </Form.Item>
                         </Col>
                     </Row>
                     <Row gutter={16}>
                         <Col span={12}>
                             <Form.Item
-                                name="date"
+                                name="Date"
                                 label="Gün"
                                 rules={[{ required: true, message: 'Gün seçiniz.' }]}
                             >
@@ -87,7 +106,7 @@ const AppointmentDrawer = (props: any) => {
                         </Col>
                         <Col span={12}>
                             <Form.Item
-                                name="time"
+                                name="Time"
                                 label="Saat"
                                 rules={[
                                     {
@@ -103,7 +122,7 @@ const AppointmentDrawer = (props: any) => {
                     <Row gutter={16}>
                         <Col span={24}>
                             <Form.Item
-                                name="description"
+                                name="Description"
                                 label="Açıklama"
                                 rules={[
                                     {

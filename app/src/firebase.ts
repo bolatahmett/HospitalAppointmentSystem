@@ -11,12 +11,8 @@ const config = {
     measurementId: process.env.REACT_APP_MID
 };
 
-let database: any = undefined;
-
-if(config && config.apiKey){
-    firebase.initializeApp(config);
-    database = firebase.database();
-}
+firebase.initializeApp(config);
+const database = firebase.database();
 
 export { database };
 export default firebase;

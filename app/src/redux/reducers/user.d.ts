@@ -1,5 +1,5 @@
 declare const user: (state: string, action: {
     type: any;
-    user: UserModel;
-}) => string | UserModel;
+    user: IUserModel;
+}) => string | IUserModel;
 export default user;
