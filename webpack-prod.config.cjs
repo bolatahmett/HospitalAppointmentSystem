@@ -13,6 +13,7 @@ const min = today.getMinutes();
 const second = today.getSeconds();
 
 const uniqueId = `${yyyy}${mm}${dd}${hh}${min}${second}`;
+var dotenvConfig = dotenv.config({ path: __dirname + '/.env' });
 
 module.exports = env => {
     console.log(env);
