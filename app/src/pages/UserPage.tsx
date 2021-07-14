@@ -1,5 +1,5 @@
-import { Col, Row, Layout, Menu, Button, Tooltip } from 'antd';
-import React, { useContext } from 'react';
+import { Col, Row, Layout, Menu, Button, Tooltip, Alert } from 'antd';
+import React, { useContext, useState } from 'react';
 import { UserOutlined, LaptopOutlined, LogoutOutlined } from '@ant-design/icons';
 import AppointmentCard from '../components/AppointmentCard';
 import { useHistory } from 'react-router-dom';
@@ -9,11 +9,17 @@ const { Header, Content, Sider } = Layout;
 
 const text = <span>Çıkış</span>;
 
-const UserPage = (props: any) => {
+const UserPage = () => {
 
     const history = useHistory();
 
     const context = useContext(UserContext);
+
+    const [tabKey, setTabKey] = useState('1');
+
+    const onSelectTab = (selectedInfo: any) => {
+        setTabKey(selectedInfo.key);
+    }
 
     return (
         <Row style={{ height: "inherit" }}>
@@ -47,12 +53,13 @@ const UserPage = (props: any) => {
                             <Menu
                                 mode="inline"
                                 defaultSelectedKeys={['1']}
-                                defaultOpenKeys={['sub1']}
+                                defaultOpenKeys={['1']}
                                 style={{ height: '100%', borderRight: 0 }}
+                                onSelect={onSelectTab}
                             >
-                                <Menu.Item key="sub1" icon={<UserOutlined />}> Randevular</Menu.Item>
-                                <Menu.Item key="sub2" icon={<LaptopOutlined />}> Bildirimler</Menu.Item>
-                                <Menu.Item key="sub3" icon={<UserOutlined />}> Kişisel Bilgiler</Menu.Item>
+                                <Menu.Item key="1" icon={<UserOutlined />}> Randevular</Menu.Item>
+                                <Menu.Item key="2" icon={<LaptopOutlined />}> Bildirimler</Menu.Item>
+                                <Menu.Item key="3" icon={<UserOutlined />}> Kişisel Bilgiler</Menu.Item>
                             </Menu>
                         </Sider>
                         <Layout style={{ padding: '0 24px 24px', height: "inherit" }}>
@@ -65,7 +72,15 @@ const UserPage = (props: any) => {
                                     height: "inherit"
                                 }}
                             >
-                                <AppointmentCard></AppointmentCard>
+                                {tabKey === '1' && <AppointmentCard></AppointmentCard>}
+                                {tabKey === '2' && <Alert
+                                    message="Dikkat"
+                                    description="Randevunuz 1 saat ileri alınmıştır."
+                                    type="warning"
+                                    showIcon
+                                    closable
+                                />}
+                                {tabKey === '3' && "Yapım aşamasında."}
                             </Content>
                         </Layout>
                     </Layout>
